@@ -12,16 +12,16 @@ export class InventorySystem {
     }
 
     add(type, amount = 1) {
+        if (this.resources[type] === undefined)
+            return;
 
         this.resources[type] += amount;
 
         console.log(
+            "ADD",
             type,
-            "+",
-            amount,
             this.resources[type]
         );
-
     }
 
 }

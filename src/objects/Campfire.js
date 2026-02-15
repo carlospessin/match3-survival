@@ -4,6 +4,9 @@ export class Campfire {
 
         this.scene = scene;
 
+        this.x = x;
+        this.y = y;
+
         this.createLogs(scene, x, y);
 
         this.fire =
