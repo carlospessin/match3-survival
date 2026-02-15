@@ -34,6 +34,9 @@ import { BottomPanelUI }
 import { MessageUI }
     from "../ui/MessageUI.js";
 
+import { WildAnimalSystem }
+    from "../systems/WildAnimalSystem.js";
+
 
 export class Match3Scene extends Phaser.Scene {
 
@@ -58,6 +61,14 @@ export class Match3Scene extends Phaser.Scene {
                 this.inventory
             );
 
+        this.survivalSystem =
+            new SurvivalSystem(
+                this,
+                this.inventory,
+                this.inventoryUI,
+                null
+            );
+
         this.messageUI =
             new MessageUI(this);
 
@@ -71,15 +82,15 @@ export class Match3Scene extends Phaser.Scene {
             new CampfireSystem(
                 this,
                 this.inventory,
-                this.inventoryUI
+                this.inventoryUI,
+                this.survivalSystem
             );
 
-        this.survivalSystem =
-            new SurvivalSystem(
+        this.wildAnimalSystem =
+            new WildAnimalSystem(
                 this,
-                this.inventory,
-                this.inventoryUI,
-                this.campfireSystem
+                this.campfireSystem,
+                this.survivalSystem
             );
 
 
@@ -99,7 +110,8 @@ export class Match3Scene extends Phaser.Scene {
                 Match3Config
             );
 
-
+        this.survivalSystem.campfireSystem =
+            this.campfireSystem;
 
         this.selectedTile = null;
         this.isBusy = false;
@@ -419,54 +431,59 @@ export class Match3Scene extends Phaser.Scene {
     }
 
     async destroy(matches) {
-
         const animations = [];
 
-        for (const tile of matches) {
+        let swordCount = 0;
 
+        for (const tile of matches) {
             const resource =
                 ResourceMap[tile.type];
 
-            // remover do grid imediatamente
             this.grid.set(
                 tile.gridX,
                 tile.gridY,
                 null
             );
 
+            // contar swords
+            if (resource === "sword") {
+                swordCount++;
+
+                animations.push(
+                    new Promise(resolve => {
+                        this.resourceFlyAnimation.animate(
+                            tile,
+                            resolve
+                        );
+                    })
+                );
+
+                continue;
+            }
+
+            // recursos normais
             animations.push(
-
                 new Promise(resolve => {
-
                     this.resourceFlyAnimation.animate(
                         tile,
                         () => {
-
-                            this.inventory.add(
-                                resource,
-                                1
-                            );
-
+                            this.inventory.add(resource, 1);
                             resolve();
-
                         }
                     );
-
                 })
-
             );
-
         }
 
-        // espera todas animações terminarem
         await Promise.all(animations);
 
-        // atualiza UI depois
+        // aplicar redução EXATA
+        if (swordCount > 0) {
+            this.survivalSystem.reduceFear(swordCount);
+        }
+
         this.inventoryUI.update();
-
     }
-
-
 
 
     async applyGravity() {

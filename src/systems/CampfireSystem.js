@@ -5,14 +5,14 @@ import { Layout }
     from "../config/Layout.js";
 
 export class CampfireSystem {
-
-    constructor(scene, inventory, inventoryUI) {
-
+    constructor(scene, inventory, inventoryUI, survivalSystem) {
         this.scene = scene;
+
         this.inventory = inventory;
+
         this.inventoryUI = inventoryUI;
 
-        this.fire = 100;
+        this.survivalSystem = survivalSystem;
 
         this.campfire =
             new Campfire(
@@ -21,35 +21,38 @@ export class CampfireSystem {
                 Layout.campfire.y
             );
 
-        // usar método correto
-        this.campfire.setIntensity(this.fire);
-
+        // intensidade inicial segura
+        this.update();
     }
+
+    update() {
+        if (!this.survivalSystem) return;
+
+        this.campfire.setIntensity(
+            this.survivalSystem.fire
+        );
+    }
+
 
     addWood() {
-
-        if (this.inventory.resources.wood > 0) {
-
-            this.inventory.resources.wood--;
-
-            this.fire =
-                Math.min(this.fire + 25, 100);
-
-            this.campfire.setIntensity(this.fire);
-
-            this.inventoryUI.update();
-
+        if (this.inventory.resources.wood <= 0) {
+            this.scene.messageUI?.show("No wood");
+            return;
         }
 
+        if (this.survivalSystem.fire >= 100) {
+            this.scene.messageUI?.show("Fire already full");
+            return;
+        }
+
+        this.inventory.resources.wood--;
+
+        this.survivalSystem.addFire(25);
+
+        this.inventoryUI.update();
+
+        this.update();
     }
 
-    consume() {
-
-        this.fire =
-            Math.max(this.fire - 1, 0);
-
-        this.campfire.setIntensity(this.fire);
-
-    }
 
 }

@@ -8,7 +8,7 @@ export const Match3Config = {
 
     tileSize: 64,
 
-    tileTypes: 4
+    tileTypes: 5
 
 };
 
@@ -32,12 +32,14 @@ export const ResourceMap = [
     "wood",
     "stone",
     "food",
-    "water"
+    "water",
+    "sword"
 ];
 
 export const ResourceIcons = [
     "🪵", // wood
     "🪨", // stone
     "🍖", // food
-    "💧"  // water
+    "💧", // water
+    "⚔️"  // sword
 ];
