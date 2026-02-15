@@ -431,11 +431,11 @@ export class Match3Scene extends Phaser.Scene {
     }
 
     async destroy(matches) {
+
         const animations = [];
 
-        let swordCount = 0;
-
         for (const tile of matches) {
+
             const resource =
                 ResourceMap[tile.type];
 
@@ -445,45 +445,29 @@ export class Match3Scene extends Phaser.Scene {
                 null
             );
 
-            // contar swords
-            if (resource === "sword") {
-                swordCount++;
-
-                animations.push(
-                    new Promise(resolve => {
-                        this.resourceFlyAnimation.animate(
-                            tile,
-                            resolve
-                        );
-                    })
-                );
-
-                continue;
-            }
-
-            // recursos normais
             animations.push(
                 new Promise(resolve => {
+
                     this.resourceFlyAnimation.animate(
                         tile,
                         () => {
-                            this.inventory.add(resource, 1);
+
+                            this.applyResource(resource);
+
                             resolve();
+
                         }
                     );
+
                 })
             );
+
         }
 
         await Promise.all(animations);
 
-        // aplicar redução EXATA
-        if (swordCount > 0) {
-            this.survivalSystem.reduceFear(swordCount);
-        }
-
-        this.inventoryUI.update();
     }
+
 
 
     async applyGravity() {
@@ -499,6 +483,74 @@ export class Match3Scene extends Phaser.Scene {
         }
 
         await Promise.all(columnAnimations);
+
+    }
+
+    applyResource(resource) {
+
+        switch (resource) {
+
+            case "food":
+
+                this.survivalSystem.setValue(
+                    "hunger",
+                    this.survivalSystem.hunger + 8
+                );
+
+                break;
+
+
+            case "water":
+
+                this.survivalSystem.setValue(
+                    "thirst",
+                    this.survivalSystem.thirst + 10
+                );
+
+                break;
+
+
+            case "fire":
+
+                this.survivalSystem.addFire(12);
+
+                break
+
+
+            case "sword":
+
+                this.survivalSystem.reduceFear(6);
+
+                break;
+
+            case "wood":
+
+                this.inventory.add("wood", 1);
+
+                this.inventoryUI.update();
+
+                break;
+
+
+            default:
+
+                // outros recursos continuam indo pro inventário
+                this.inventory.add(resource, 1);
+                this.inventoryUI.update();
+
+        }
+
+        this.survivalSystem.updateUI();
+
+    }
+
+    applyFireFromMatch(amount) {
+
+        const fireGain = amount * 15;
+
+        this.survivalSystem.addFire(fireGain);
+
+        this.update();
 
     }
 

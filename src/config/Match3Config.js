@@ -8,7 +8,7 @@ export const Match3Config = {
 
     tileSize: 64,
 
-    tileTypes: 5
+    tileTypes: 6
 
 };
 
@@ -29,17 +29,19 @@ Match3Config.offsetY =
     (Layout.screenHeight - Match3Config.height) / 2;
 
 export const ResourceMap = [
-    "wood",
+    "fire",
     "stone",
     "food",
     "water",
-    "sword"
+    "sword",
+    "wood"
 ];
 
 export const ResourceIcons = [
-    "🪵", // wood
+    "🔥", // fire
     "🪨", // stone
     "🍖", // food
     "💧", // water
-    "⚔️"  // sword
+    "⚔️",  // sword
+    "🪵"  // wood 
 ];

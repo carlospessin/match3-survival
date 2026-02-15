@@ -72,7 +72,7 @@ export class Campfire {
                     .setDepth(depth);
 
             // base madeira
-            const wood =
+            const fire =
                 scene.add.rectangle(
                     0,
                     0,
@@ -103,7 +103,7 @@ export class Campfire {
                     0.4
                 );
 
-            log.add([shadow, wood, highlight]);
+            log.add([shadow, fire, highlight]);
 
             log.setRotation(
                 Phaser.Math.DegToRad(data.angle)

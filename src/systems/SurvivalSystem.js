@@ -10,17 +10,15 @@ export class SurvivalSystem {
 
         this.max = 100;
 
-        this.fire = 60;
-        this.hunger = 80;
-        this.thirst = 80;
+        this.fire = 100;
+        this.hunger = 100;
+        this.thirst = 100;
         this.fear = 0;
 
         this.setValue("fire", this.fire);
         this.setValue("hunger", this.hunger);
         this.setValue("thirst", this.thirst);
         this.setValue("fear", this.fear);
-
-
 
 
         // posição lado direito
@@ -67,34 +65,37 @@ export class SurvivalSystem {
 
 
     startFearLoop() {
+
         this.scene.time.addEvent({
 
-            delay: Phaser.Math.Between(3000, 6000), // lento
+            delay: Phaser.Math.Between(5000, 9000),
 
             loop: true,
 
             callback: () => {
-                // quanto menor o fire, maior o risco
+
                 let multiplier = 1;
 
                 if (this.fire < 50)
-                    multiplier = 1.5;
+                    multiplier = 1.2;
 
                 if (this.fire < 25)
-                    multiplier = 2;
+                    multiplier = 1.5;
 
                 if (this.fire <= 0)
-                    multiplier = 3;
+                    multiplier = 2;
 
                 const amount =
-                    Phaser.Math.Between(1, 10) * multiplier;
+                    Phaser.Math.FloatBetween(0.5, 2) * multiplier;
 
                 this.addFear(amount);
 
             }
 
         });
+
     }
+
 
 
 
@@ -264,43 +265,90 @@ export class SurvivalSystem {
     // =================
 
     startDecay() {
+
+        // FIRE decay (mais lento)
         this.scene.time.addEvent({
 
-            delay: 2000,
+            delay: 4000,
 
             loop: true,
 
             callback: () => {
-                // fogo diminui sempre
-                this.fire -= 1;
 
-                this.hunger -= 2;
-                this.thirst -= 3;
+                this.setValue(
+                    "fire",
+                    this.fire - 1
+                );
 
-                // fogo baixo aumenta fear automaticamente
-                if (this.fire < 50) {
+                // fogo baixo aumenta fear lentamente
+                if (this.fire < 40) {
+
                     this.addFear(
-                        Phaser.Math.Between(2, 6)
+                        Phaser.Math.FloatBetween(0.5, 1.5)
                     );
+
                 }
 
-                // fogo apagado = perigo extremo
+                // fogo apagado aumenta mais
                 if (this.fire <= 0) {
+
                     this.addFear(
-                        Phaser.Math.Between(8, 15)
+                        Phaser.Math.FloatBetween(2, 4)
                     );
+
                 }
 
                 this.updateUI();
 
-                if (this.campfireSystem) {
+                if (this.campfireSystem)
                     this.campfireSystem.update();
-                }
 
-                if (this.fear >= this.max)
-                    this.gameOver("Consumed by darkness");
             }
+
         });
+
+
+        // HUNGER decay
+        this.scene.time.addEvent({
+
+            delay: 6000,
+
+            loop: true,
+
+            callback: () => {
+
+                this.setValue(
+                    "hunger",
+                    this.hunger - 1
+                );
+
+                this.updateUI();
+
+            }
+
+        });
+
+
+        // THIRST decay
+        this.scene.time.addEvent({
+
+            delay: 5000,
+
+            loop: true,
+
+            callback: () => {
+
+                this.setValue(
+                    "thirst",
+                    this.thirst - 1
+                );
+
+                this.updateUI();
+
+            }
+
+        });
+
     }
 
     addFire(amount) {

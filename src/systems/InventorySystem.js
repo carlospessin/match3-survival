@@ -3,10 +3,11 @@ export class InventorySystem {
     constructor() {
 
         this.resources = {
-            wood: 0,
+            fire: 0,
             stone: 0,
             food: 0,
-            water: 0
+            water: 0,
+            wood: 0
         };
 
     }

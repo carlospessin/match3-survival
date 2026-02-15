@@ -20,14 +20,14 @@ export class ActionBarUI {
         this.createButton(
             centerX - spacing,
             y,
-            "🔥 Add wood",
+            "🔥 Add fire",
             () => {
-                if (this.inventory.resources.wood <= 0) {
-                    this.messageUI.show("No wood");
+                if (this.inventory.resources.fire <= 0) {
+                    this.messageUI.show("No fire");
                     return;
                 }
 
-                this.campfireSystem.addWood();
+                this.campfireSystem.addFire();
                 this.inventoryUI.update();
             }
         );
