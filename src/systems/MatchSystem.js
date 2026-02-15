@@ -6,10 +6,11 @@ export class MatchSystem {
         this.inventory = inventory;
 
         this.map = [
-            "wood",
+            "fire",
             "stone",
             "food",
-            "water"
+            "water",
+            "wood"
         ];
 
     }

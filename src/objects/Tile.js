@@ -11,10 +11,12 @@ export class Tile {
         this.type = type;
 
         const colors = [
-            0x8b5a2b, // wood
+            0xFFDE21, // fire
             0x888888, // stone
             0xaa3333, // food
-            0x3366cc  // water
+            0x3366cc, // water
+            0xcccccc, // sword
+            0x8b5a2b  // wood
         ];
 
         const px =

@@ -42,6 +42,7 @@ Resources from matches:
 
   Tile   Resource
   ------ ----------------------
+  🔥     Fire
   🪵     Wood
   🪨     Stone
   🍖     Food
@@ -58,7 +59,7 @@ Sword tiles do NOT go to inventory. They reduce fear instantly.
 
 The campfire:
 
--   Consumes wood over time
+-   Consumes fire over time
 -   Provides light and safety
 -   Has animated flame with intensity levels
 -   Extinguishing the fire results in death

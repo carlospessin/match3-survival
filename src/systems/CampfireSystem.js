@@ -34,9 +34,9 @@ export class CampfireSystem {
     }
 
 
-    addWood() {
-        if (this.inventory.resources.wood <= 0) {
-            this.scene.messageUI?.show("No wood");
+    addFire() {
+        if (this.inventory.resources.fire <= 0) {
+            this.scene.messageUI?.show("No fire");
             return;
         }
 
@@ -45,8 +45,7 @@ export class CampfireSystem {
             return;
         }
 
-        this.inventory.resources.wood--;
-
+        this.inventory.resources.fire--;
         this.survivalSystem.addFire(25);
 
         this.inventoryUI.update();

@@ -52,12 +52,8 @@ export class InventoryUI {
         this.text.setText(
 
             `Inventory
-
-Wood:  ${r.wood}
-Stone: ${r.stone}
-Food:  ${r.food}
-Water: ${r.water}`
-
+             Stone: ${r.stone}
+             Wood: ${r.wood}`
         );
 
     }
