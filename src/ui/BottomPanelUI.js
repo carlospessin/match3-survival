@@ -4,7 +4,7 @@ export class BottomPanelUI {
 
         this.scene = scene;
 
-        const height = 140;
+        const height = 100;
 
         this.background =
             scene.add.rectangle(

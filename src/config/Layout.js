@@ -17,8 +17,8 @@ Layout.rightX =
 // Inventory (direita superior esquerda)
 Layout.inventory = {
 
-    x: Layout.rightX + 20,
-    y: 20
+    x: Layout.rightX,
+    y: 60
 
 };
 

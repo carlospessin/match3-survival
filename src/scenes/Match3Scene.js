@@ -135,8 +135,6 @@ export class Match3Scene extends Phaser.Scene {
 
     }
 
-
-
     // =========================
     // GRID INIT
     // =========================
@@ -311,7 +309,6 @@ export class Match3Scene extends Phaser.Scene {
 
     }
 
-
     async swap(a, b) {
 
         const ax = a.gridX;
@@ -468,8 +465,6 @@ export class Match3Scene extends Phaser.Scene {
 
     }
 
-
-
     async applyGravity() {
 
         const columnAnimations = [];
@@ -554,7 +549,6 @@ export class Match3Scene extends Phaser.Scene {
 
     }
 
-
     async applyGravityColumn(x) {
 
         // começa de baixo para cima
@@ -601,9 +595,6 @@ export class Match3Scene extends Phaser.Scene {
         }
 
     }
-
-
-
 
     async refill() {
 
@@ -684,10 +675,6 @@ export class Match3Scene extends Phaser.Scene {
 
     }
 
-
-
-
-
     async drawGrid() {
 
         const animations = [];
@@ -751,9 +738,6 @@ export class Match3Scene extends Phaser.Scene {
 
     }
 
-
-
-
     moveTile(tile, duration = 120) {
 
         const px =
@@ -769,8 +753,6 @@ export class Match3Scene extends Phaser.Scene {
         return tile.moveTo(px, py, duration);
 
     }
-
-
 
     delay(ms) {
 

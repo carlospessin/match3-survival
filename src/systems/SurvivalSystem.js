@@ -23,7 +23,7 @@ export class SurvivalSystem {
 
         // posição lado direito
         const x =
-            scene.scale.width - 240;
+            scene.scale.width - 300;
 
         const startY = 40;
         const gap = 55;

@@ -35,7 +35,8 @@ export class InventoryUI {
                 {
                     fontSize: "18px",
                     color: "#ffffff",
-                    fontFamily: "monospace"
+                    fontFamily: "monospace",
+                    lineSpacing: 8
                 }
             )
                 .setDepth(2001);
@@ -49,12 +50,12 @@ export class InventoryUI {
         const r =
             this.inventory.resources;
 
-        this.text.setText(
-
-            `Inventory
-             Stone: ${r.stone}
-             Wood: ${r.wood}`
-        );
+        this.text.setText([
+            "Inventory",
+            "-----------",
+            `🪨 Stone: ${r.stone}`,
+            `🪵 Wood: ${r.wood}`
+        ].join("\n"));
 
     }
 

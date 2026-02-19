@@ -1,6 +1,3 @@
-import { Layout }
-    from "../config/Layout.js";
-
 export class ActionBarUI {
 
     constructor(scene, inventory, inventoryUI, survivalSystem, campfireSystem) {
